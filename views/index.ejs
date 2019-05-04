@@ -6,6 +6,23 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <ul>
+      <% for(let { endpoint, url, methods } of routes) { %>
+        <li>
+          <% if(url) { %>
+            <a href=<%= url %>>
+              <%= endpoint %>
+            </a>
+          <% } else { %>
+            <%= endpoint %>
+          <% } %>
+          <ul>
+            <% for(let method of methods) { %>
+              <li><%= method %></li>
+            <% } %>
+          </ul>
+        </li>
+      <% } %>
+    </ul>
   </body>
 </html>

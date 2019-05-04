@@ -2,9 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-/* GET home page. */
+const title = 'Ballin Songs API';
+const routes = [];
+
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Ballin Songs API' });
+  res.render('index', { title, routes });
 });
 
 module.exports = router;
