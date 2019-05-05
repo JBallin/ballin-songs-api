@@ -1,7 +1,9 @@
 const express = require('express');
 
+const { generateToken } = require('../utils/generateToken');
+
 const router = express.Router();
-const token = '';
+const token = generateToken();
 
 router.get('/', (req, res) => {
   res.json({ token });
