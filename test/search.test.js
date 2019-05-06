@@ -2,6 +2,8 @@ const request = require('supertest');
 const { assert } = require('chai');
 
 const app = require('../app');
+const { generateRateLimitedToken } = require('./testUtils/generateRateLimitedToken');
+const { rateLimit } = require('../utils/errors');
 
 describe('/search', () => {
   const keys = ['id', 'attributes'];
@@ -44,6 +46,19 @@ describe('/search', () => {
           assert.lengthOf(songs, 10);
           assert.containsAllKeys(songs[0], keys);
           assert.containsAllKeys(songs[0].attributes, attributesKeys);
+          return done();
+        });
+    });
+    it('should handle rate limit error', (done) => {
+      const rateLimitedToken = generateRateLimitedToken();
+      request(app)
+        .get('/search?term=rihanna')
+        .set('Authorization', `Bearer ${rateLimitedToken}`)
+        .expect(rateLimit.status)
+        .expect('Content-Type', /html/)
+        .end((err, { text }) => {
+          if (err) return done(err);
+          assert.include(text, rateLimit.message);
           return done();
         });
     });
