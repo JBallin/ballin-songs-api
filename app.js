@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const tokenRouter = require('./routes/token');
+const searchRouter = require('./routes/search');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors({ origin: process.env.APP_URL || 'http://localhost:3000' }));
 
 app.use('/', indexRouter);
 app.use('/token', tokenRouter);
+app.use('/search', searchRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

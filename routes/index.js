@@ -9,6 +9,11 @@ const routes = [
     url: '/token',
     methods: ['GET'],
   },
+  {
+    endpoint: '/search',
+    url: '/search?term=drake+blessed',
+    methods: ['GET'],
+  },
 ];
 
 router.get('/', (req, res) => {
