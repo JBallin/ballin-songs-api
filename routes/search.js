@@ -19,17 +19,14 @@ router.get('/', async ({ query, headers: { authorization } }, res, next) => {
     .then((parsed) => {
       const { message } = parsed;
       if (message) {
-        if (message === 'API capacity exceeded') {
-          next(createError(rateLimit.status, rateLimit.message));
-        } else {
-          next(createError(500, message));
-        }
+        const err = message === 'API capacity exceeded' ? rateLimit : /* istanbul ignore next */ { status: 500, message };
+        next(createError(err.status, err.message));
       } else {
         const { songs } = parsed.results;
         res.json({ songs: songs ? songs.data : [] });
       }
     })
-    .catch(err => next(err));
+    .catch(/* istanbul ignore next */ err => next(err));
 });
 
 module.exports = router;

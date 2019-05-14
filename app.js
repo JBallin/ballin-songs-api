@@ -16,6 +16,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+/* istanbul ignore next */
 if (!process.env.NODE_ENV) app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,9 +37,11 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   // set locals, only providing error in development
   res.locals.message = err.message;
+  /* istanbul ignore next */
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  /* istanbul ignore next */
   res.status(err.status || 500);
   res.render('error');
 });
