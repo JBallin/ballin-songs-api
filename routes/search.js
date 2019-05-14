@@ -12,8 +12,7 @@ const router = express.Router();
 // check if authorization header has already been set (see search.test.js)
 router.get('/', async ({ query, headers: { authorization } }, res, next) => {
   const url = `${APPLE_MUSIC_SEARCH_API}?types=songs&limit=10&term=${query.term}`;
-  const token = generateToken();
-  const headers = { Authorization: authorization || `Bearer ${token}` };
+  const headers = { Authorization: authorization || `Bearer ${generateToken()}` };
 
   fetch(url, { headers })
     .then(json => json.json())
